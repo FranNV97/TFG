@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateObjectivesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('objectives', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('type');
+            $table->string('valor');
+            $table->integer('process_id')->unsigned();
+            $table->timestamps();
+        });
+
+        Schema::table('objectives', function($table) {
+            $table->foreign('process_id')->references('id')->on('processes');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('objectives');
+    }
+}
